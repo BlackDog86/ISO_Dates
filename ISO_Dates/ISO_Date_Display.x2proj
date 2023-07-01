@@ -17,6 +17,9 @@ YYYY/MM/DD</Description>
     <Folder Include="Src\ISO_Date_Display\Classes\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\XComDateTime.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Localization\XComGame.chn">
       <SubType>Content</SubType>
     </Content>

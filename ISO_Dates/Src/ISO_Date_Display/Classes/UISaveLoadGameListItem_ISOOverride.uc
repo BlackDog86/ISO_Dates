@@ -1,6 +1,8 @@
-class UISaveLoadGameListItem_ISOOverride extends UISaveLoadGameListItem
+class UISaveLoadGameListItem_ISOOverride extends UISaveLoadGameListItem config(DateTime)
 	dependson(XComOnlineEventMgr);
 	
+	var config bool b24hClock;
+
 simulated function UpdateData(OnlineSaveGame save)
 {
 	local ASValue myValue;
@@ -157,4 +159,20 @@ simulated function UpdateData(OnlineSaveGame save)
 	myArray.AddItem(myValue);
 
 	Invoke("updateData", myArray);
+}
+
+simulated function string FormatTime( string HeaderTime )
+{
+	local string FormattedTime;
+
+	// HeaderTime is in 24h format
+	FormattedTime = HeaderTime;
+	if( GetLanguage() == "INT" && !b24hClock )
+	{
+		FormattedTime = `ONLINEEVENTMGR.FormatTimeStampFor12HourClock(FormattedTime);
+	}
+
+	FormattedTime = Repl(FormattedTime, "\n", " - ");
+
+	return FormattedTime;
 }
