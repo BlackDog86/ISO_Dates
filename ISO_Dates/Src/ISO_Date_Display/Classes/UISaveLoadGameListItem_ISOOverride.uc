@@ -15,6 +15,11 @@ simulated function UpdateData(OnlineSaveGame save)
 	local array<string> saveDateArray;
 	local array<string> gameDateArray;
 	local array<string> dateTimeArray;
+	local string gameTime;
+	local int gameHour;
+	local string gameHourString;
+	local int gameMinute;
+	local string gameMinuteString;
 
 	//Descriptions Array - When we're in mission: (header length = 7)
 	//6/13/2023										Descriptions[0]	- Save Date		
@@ -31,7 +36,7 @@ simulated function UpdateData(OnlineSaveGame save)
 	//My Special Save Game 2						Descriptions[2] - Player Description (Typed)
 	//Geoscape										Descriptions[3] - Mission type (or geoscape)
 	//10/17/2035									Descriptions[4] - In-Game Date
-	//11:41 PM ADVENT Patrol Area, Mexico City		Descriptions[5] - In-Game Time & Area
+	//11:41 PM										Descriptions[5] - In-Game Time & Area
 
 	OnlineEventMgr = `ONLINEEVENTMGR;	
 	if(save.Filename == "")
@@ -98,18 +103,49 @@ simulated function UpdateData(OnlineSaveGame save)
 			}
 		if (Descriptions.Length == 6) // We saved on the Geoscape
 			{
+			gameHour=Int(Left(Descriptions[5],2));			//Put the in-game time into integer variables	
+			gameMinute=Int(Mid(Descriptions[5],3,2));		
+				
+				If(InStr(Left(Descriptions[5],8),"PM") !=INDEX_NONE)		
+				{			
+				gameHour=Int(Left(Descriptions[5],2))+12;	//If "PM" is in the string, add 12			
+				}	
+					
+				gameHourString="";
+				gameHourString$=gameHour;
+				If (Len(gameHourString)==1)
+					{
+					gameHourString="0"$gameHourString;
+					}
+				gameMinuteString="";
+				gameMinuteString$=gameMinute;					//Append leading 0
+					If (Len(gameMinuteString)==1)
+					{
+					gameMinuteString="0"$gameMinuteString;
+					}
+
+			gameTime=gameHourString$":"$gameMinuteString;
+			
 			strName = Descriptions[3];							//Just output "geoscape" since there are no mission details
 			gameDateArray=SplitString(Descriptions[4],"/");		//As before - note that the array elements are now offset by one compared with the in-mission saves
 			if (len(gameDateArray[0]) == 1)
 				{
 				gameDateArray[0] = "0" $ gameDateArray[0];
 				}
-				if (len(gameDateArray[1]) == 1)
+			if (len(gameDateArray[1]) == 1)
 				{
 				gameDateArray[1] = "0" $ gameDateArray[1];
 				}
 			strMission = gameDateArray[2] $'-'$ gameDateArray[0] $'-'$ gameDateArray[1];
-			strMission $= ' - ' $ Descriptions[5];
+			
+			if (b24hClock)
+				{	
+				strMission $= ' - ' $ gameTime;
+				}
+				else
+				{
+				strMission $= ' - ' $ Descriptions[5];
+				}
 			}
 	}
 	
