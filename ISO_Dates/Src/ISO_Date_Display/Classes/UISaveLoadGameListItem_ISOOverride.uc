@@ -68,6 +68,12 @@ simulated function UpdateData(OnlineSaveGame save)
 		{
 		saveDateArray[1] = "0" $ saveDateArray[1];
 		}
+	if (len(DateTimeArray[1]) == 4)
+	//e.g. A 24h clock time is listed as 1:34 onstead of 01:34
+		{
+		DateTimeArray[1] = "0" $ DateTimeArray[1];
+		}	
+	
 	//For old save files that used "-"
 	if( Descriptions.length < 2 )
 		Descriptions = SplitString(Header.Description, "-");
@@ -83,8 +89,8 @@ simulated function UpdateData(OnlineSaveGame save)
 	else
 	{
 		//We've made a normal save game
-		strTime = saveDateArray[2] $'-'$ saveDateArray[0] $'-'$ saveDateArray[1] $' - '$ dateTimeArray[1]; // This is actually the date & time concatenated together
-		strDate = strTime @ (Descriptions.Length >= 3 ? Descriptions[2] : ""); // This goes on the first line of the save/load box (Date + time + user save description)
+		strTime = saveDateArray[2] $'-'$ saveDateArray[0] $'-'$ saveDateArray[1] $' - '$ dateTimeArray[1] $' - '; // This is actually the date & time concatenated together
+		strDate = strTime $ (Descriptions.Length >= 3 ? Descriptions[2] : ""); // This goes on the first line of the save/load box (Date + time + user save description)
 		
 		if (Descriptions.Length == 7) // We saved in a mission
 			{
