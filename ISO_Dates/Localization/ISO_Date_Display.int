@@ -1,0 +1,17 @@
+[WOTC_ISO_Dates_MCMScreen]
+ModName = "ISO Dates and 24h Clock"
+PageTitle = "ISO Dates and 24h Clock"
+GroupHeader = "General"
+
+TWENTY_FOUR_HOUR_CLOCK_Label = "Use 24 hour clock in save/load dialogs"
+TWENTY_FOUR_HOUR_CLOCK_Tip = "24h Clock is enabled when this box is checked."
+
+TWENTY_FOUR_HOUR_CLOCK_ON_GEOSCAPE_Label = "Use 24 hour clock on the geoscape"
+TWENTY_FOUR_HOUR_CLOCK_ON_GEOSCAPE_Tip = "24h Clock is enabled when this box is checked."
+
+SHOW_MISSION_LOCATION_ON_SAVE_LOAD_Label = "Show mission location instead of operation name"
+SHOW_MISSION_LOCATION_ON_SAVE_LOAD_Tip = "When checked, shows the mission location instead of op. name on line 3"
+
+USE_SOURCE_TIMEZONE_WHEN_FLYING_Label = "Update timezone after the skyranger has landed"
+USE_DESTINATION_TIMEZONE_WHEN_FLYING_Label = "Update timezone when the skyranger takes off"
+IGNORE_TIMEZONE_WHEN_FLYING_Label = "Never update timezone"
